@@ -6,6 +6,7 @@ export async function POST(request: NextRequest) {
   try {
     const { email, password } = await request.json();
 
+    console.log(email, password);
     if (!email || !password) {
       return NextResponse.json(
         { message: "Email and password are required" },
@@ -13,7 +14,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    await connectToDatabase();
+    const conn = await connectToDatabase();
+    console.log(conn);
+    console.log("Connecting to database...");
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
